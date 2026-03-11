@@ -132,3 +132,44 @@ def test_read_an_account(self):
     self.assertEqual(responce.status_code, status.HTTP_200_OK)
     data = responce.get_json()
     self.assertEqual(data["name"], account.name)
+
+def test_get_account_list(self):
+    """It should get the list of all accounts"""
+    self.create_account(5)
+    responce = self.client.get(BASE_URL)
+    self.assertEqual(responce.status_code, status.HTTP_200_OK)
+    data = responce.get_json()
+    self.assertEqual(len(data), 5)
+
+
+def test_update_an_account(self):
+    """It shoud update an account"""
+    # create a test account
+    test_account = AccountFactory()
+    responce = self.client.post(BASE_URL, json=test_account)
+    self.assertEqual(responce.status_code, status.HTTP_201_CREATED)
+
+    # update the account
+    new_account = responce.get_json()
+    new_account["name"] = "something"
+    responce = self.client.put("{BASE_URL}/{new_account['id']}", json=new_account)
+    self.assertEqual(responce.status_code, status.HTTP_200_OK)
+
+    # get data for updated account
+    data = responce.get_json()
+    self.assertEqual(data["name"], "something")
+
+
+def test_deleting_account(self):
+    """It deletes a account"""
+    # create a test account
+    test_account = self._create_accounts(1)[0]
+    responce = self.client.post(BASE_URL, json=test_account)
+    self.assertEqual(responce.status_code, status.HTTP_201_CREATED)
+
+    #deleting the account
+    account = self.client.delete(BASE_URL,f"{BASE_URL}/{account.id}" )
+    self.assertEqual(account.status_code, status.http_404_NOT_FOUND)
+
+
+
