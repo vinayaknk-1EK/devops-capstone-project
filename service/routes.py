@@ -64,13 +64,13 @@ def create_accounts():
 # ... place you code here to LIST accounts ...
 
 
-@app.route("/accounts/", mehtods=["GET"])
+@app.route("/accounts/", methods=["GET"])
 def list_all_accounts():
     """this lists all accounts"""
     app.logger.info("Request to list all accounts")
     
     accounts = Accounts.all()
-    account_list = [account.serialize() for a in accounts]
+    account_list = [a.serialize() for a in accounts]
 
     app.logger.info("Returning the list of accounts", len(account_list))
 
@@ -89,11 +89,11 @@ def list_all_accounts():
 @app.route("/accounts/<int:account_id>", methods =["GET"])
 def read_account(account_id):
     """sends the desided acc for id"""
-    app.logger.info("Request for the account with the id:{account_id}")
+    app.logger.info(f"Request for the account with the id:{account_id}")
 
-    account = Account.find(id)
+    account = Account.find(account_id)
     if not account:
-        abort status.http_404_NOT_FOUND, f"(Account with id [{account_id}] not found)"
+        abort (status.http_404_NOT_FOUND, f"(Account with id [{account_id}] not found)")
 
     return account.serialize(), status.HTTP_200_OK
 
@@ -115,7 +115,7 @@ def update_accounts(account_id):
     account.deserialize(request.get_json())
     account.update()
 
-    return account.serialize(), HTTP_200_OK
+    return account.serialize(), status.HTTP_200_OK
 
 
 
