@@ -64,12 +64,12 @@ def create_accounts():
 # ... place you code here to LIST accounts ...
 
 
-@app.route("/accounts/", methods=["GET"])
+@app.route("/accounts", methods=["GET"])
 def list_all_accounts():
     """this lists all accounts"""
     app.logger.info("Request to list all accounts")
     
-    accounts = Accounts.all()
+    accounts = Account.all()
     account_list = [a.serialize() for a in accounts]
 
     app.logger.info("Returning the list of accounts", len(account_list))
@@ -134,7 +134,7 @@ def delete_an_account(account_id):
         abort(status.http_404_NOT_FOUND, f"account with id{account_id} not found")
 
     account.delete()
-    return status.HTTP_204_NO_CONTENT, f"account has been deleted"
+    return f"account has been deleted", status.HTTP_204_NO_CONTENT
 
 
 
