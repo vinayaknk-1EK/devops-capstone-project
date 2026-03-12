@@ -8,6 +8,7 @@ Test cases can be run with the following:
 import os
 import logging
 from unittest import TestCase
+import unittest
 from tests.factories import AccountFactory
 from service.common import status  # HTTP Status Codes
 from service.models import db, Account, init_db
@@ -23,7 +24,7 @@ BASE_URL = "/accounts"
 ######################################################################
 #  T E S T   C A S E S
 ######################################################################
-class TestAccountService(TestCase):
+class TestAccountService(unittest.TestCase):
     """Account Service Tests"""
 
     @classmethod
@@ -124,7 +125,7 @@ class TestAccountService(TestCase):
         self.assertEqual(response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
     # ADD YOUR TEST CASES HERE ...
-class TestAccountService(unittest.TestCase):
+
     def test_read_an_account(self):
         """ It should read a single account"""
         account = self._create_accounts(1)[0]
@@ -146,7 +147,7 @@ class TestAccountService(unittest.TestCase):
         """It shoud update an account"""
         # create a test account
         test_account = AccountFactory()
-        responce = self.client.post(BASE_URL, json=test_account)
+        responce = self.client.post(BASE_URL, json=test_account.serialize())
         self.assertEqual(responce.status_code, status.HTTP_201_CREATED)
 
         # update the account
@@ -164,12 +165,13 @@ class TestAccountService(unittest.TestCase):
         """It deletes a account"""
         # create a test account
         test_account = self._create_accounts(1)[0]
-        responce = self.client.post(BASE_URL, json=test_account)
-        self.assertEqual(responce.status_code, status.HTTP_201_CREATED)
 
         #deleting the account
-        account = self.client.delete(f"{BASE_URL}/{account.id}" )
-        self.assertEqual(account.status_code, status.http_204_NO_CONTENT)
+        responce = self.client.delete(f"{BASE_URL}/{test_account.id}" )
+        self.assertEqual(responce.status_code, status.HTTP_204_NO_CONTENT)
 
-
+    def test_for_method_not_allowed(self):
+        """tests for methods not allowed"""
+        responce = self.client.delete(BASE_URL)
+        self.assertAlmostEqual(responce.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
