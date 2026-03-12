@@ -62,13 +62,10 @@ def create_accounts():
 ######################################################################
 
 # ... place you code here to LIST accounts ...
-
-
 @app.route("/accounts", methods=["GET"])
 def list_all_accounts():
     """this lists all accounts"""
     app.logger.info("Request to list all accounts")
-    
     accounts = Account.all()
     account_list = [a.serialize() for a in accounts]
 
@@ -76,16 +73,11 @@ def list_all_accounts():
 
     return jsonify(account_list), status.HTTP_200_OK
 
-
-
-
 ######################################################################
 # READ AN ACCOUNT
 ######################################################################
 
 # ... place you code here to READ an account ...
-
-
 @app.route("/accounts/<int:account_id>", methods=["GET"])
 def read_account(account_id):
     """sends the desided acc for id"""
@@ -93,10 +85,9 @@ def read_account(account_id):
 
     account = Account.find(account_id)
     if not account:
-        abort (status.http_404_NOT_FOUND, f"(Account with id [{account_id}] not found)")
+        abort(status.http_404_NOT_FOUND, f"(Account with id [{account_id}] not found)")
 
     return account.serialize(), status.HTTP_200_OK
-
 
 ######################################################################
 # UPDATE AN EXISTING ACCOUNT
@@ -117,14 +108,11 @@ def update_accounts(account_id):
 
     return account.serialize(), status.HTTP_200_OK
 
-
-
 ######################################################################
 # DELETE AN ACCOUNT
 ######################################################################
 
 # ... place you code here to DELETE an account ...
-
 @app.route("/accounts/<int:account_id>", methods=["DELETE"])
 def delete_an_account(account_id):
     """delete an account for the said account id"""
@@ -134,9 +122,7 @@ def delete_an_account(account_id):
         abort(status.http_404_NOT_FOUND, f"account with id{account_id} not found")
 
     account.delete()
-    return f"account has been deleted", status.HTTP_204_NO_CONTENT
-
-
+    return "account has been deleted", status.HTTP_204_NO_CONTENT
 
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S
