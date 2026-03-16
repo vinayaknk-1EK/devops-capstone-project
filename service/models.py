@@ -64,6 +64,8 @@ class PersistentBase:
         logger.info("Initializing database")
         cls.app = app
         # This is where we initialize SQLAlchemy from the Flask app
+        # Use this variable to configure your SQLAlchemy engine or Flask app
+        app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
         db.init_app(app)
         app.app_context().push()
         db.create_all()  # make our sqlalchemy tables
@@ -90,9 +92,6 @@ class Account(db.Model, PersistentBase):
     """
 
     app = None
-    # Use this variable to configure your SQLAlchemy engine or Flask app
-    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
-
     # Table Schema
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
