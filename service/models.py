@@ -6,6 +6,11 @@ All of the models are stored in this module
 import logging
 from datetime import date
 from flask_sqlalchemy import SQLAlchemy
+import os
+
+# Get the database URL from the environment variable
+# Provide a localhost fallback ONLY for manual local development
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/postgres")
 
 logger = logging.getLogger("flask.app")
 
@@ -59,6 +64,8 @@ class PersistentBase:
         logger.info("Initializing database")
         cls.app = app
         # This is where we initialize SQLAlchemy from the Flask app
+        # Use this variable to configure your SQLAlchemy engine or Flask app
+        app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
         db.init_app(app)
         app.app_context().push()
         db.create_all()  # make our sqlalchemy tables
@@ -85,7 +92,6 @@ class Account(db.Model, PersistentBase):
     """
 
     app = None
-
     # Table Schema
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
