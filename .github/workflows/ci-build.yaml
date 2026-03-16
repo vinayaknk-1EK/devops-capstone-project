@@ -42,16 +42,6 @@ jobs:
           flake8 service --count --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Unit test with nose
-        run: |
-          # Install netcat to check port status
-          apt-get update && apt-get install -y netcat
-          
-          # Wait for the postgres service to be ready on port 5432
-          while ! nc -z postgres 5432; do
-            echo "Waiting for Postgres..."
-            sleep 1
-          done
-          
-          nosetests
+        run: nosetests
         env:
           DATABASE_URL: "postgresql://postgres:pgs3cr3t@postgres:5432/testdb"
