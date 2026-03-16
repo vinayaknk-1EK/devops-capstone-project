@@ -10,13 +10,7 @@ import os
 
 # Get the database URL from the environment variable
 # Provide a localhost fallback ONLY for manual local development
-DATABASE_URL = os.getenv(
-    "DATABASE_URL", 
-    "postgresql://postgres:postgres@localhost:5432/postgres"
-)
 
-# Use this variable to configure your SQLAlchemy engine or Flask app
-app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 
 logger = logging.getLogger("flask.app")
 
@@ -96,6 +90,13 @@ class Account(db.Model, PersistentBase):
     """
 
     app = None
+    DATABASE_URL = os.getenv(
+    "DATABASE_URL", 
+    "postgresql://postgres:postgres@localhost:5432/postgres"
+)
+
+    # Use this variable to configure your SQLAlchemy engine or Flask app
+    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 
     # Table Schema
     id = db.Column(db.Integer, primary_key=True)
