@@ -91,9 +91,8 @@ class Account(db.Model, PersistentBase):
 
     app = None
     DATABASE_URL = os.getenv(
-    "DATABASE_URL", 
-    "postgresql://postgres:postgres@localhost:5432/postgres"
-)
+        "DATABASE_URL",
+        "postgresql://postgres:postgres@localhost:5432/postgres")
 
     # Use this variable to configure your SQLAlchemy engine or Flask app
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
