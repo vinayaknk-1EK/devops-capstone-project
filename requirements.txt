@@ -32,4 +32,4 @@ httpie==3.2.1
 Flask-talisman==1.1.0
 
 # Flask-cors
-Flask-Cors==1.1.0
+Flask-Cors==4.0.0

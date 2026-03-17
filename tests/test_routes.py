@@ -197,5 +197,5 @@ class TestAccountService(unittest.TestCase):
         response = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # check for the CORS header
-        self.assertEqual(response.header.get('Access-Control-Allow-Origin'), '*'))
+        self.assertEqual(response.headers.get('Access-Control-Allow-Origin'), '*'))
 
