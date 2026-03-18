@@ -15,6 +15,9 @@ spec:
     - name: repo-url
     - name: branch
       default: main
+    - name: database-uri
+      type: string
+      default: "sqlite:///test.db"
   tasks:
     - name: init
       workspaces:
@@ -59,7 +62,7 @@ spec:
         name: nose
       params:
       - name: database_uri
-        value: "sqlite:///test.db"
+        value: $(params.database-uri)
       - name: args
         value: ["-v", "--with-spec", "--spec-color"]
       runAfter:
