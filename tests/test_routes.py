@@ -194,3 +194,4 @@ class TestAccountService(unittest.TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # check for the CORS header
         self.assertEqual(response.headers.get('Access-Control-Allow-Origin'), '*')
+      
