@@ -170,7 +170,7 @@ class TestAccountService(unittest.TestCase):
         test_account = self._create_accounts(1)[0]
 
         #deleting the account
-        responce = self.client.delete(f"{BASE_URL}/{test_account.id}" )
+        responce = self.client.delete(f"{BASE_URL}/{test_account.id}")
         self.assertEqual(responce.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_for_method_not_allowed(self):
