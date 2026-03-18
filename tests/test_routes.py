@@ -7,7 +7,6 @@ Test cases can be run with the following:
 """
 import os
 import logging
-from unittest import TestCase
 import unittest
 from tests.factories import AccountFactory
 from service.common import status  # HTTP Status Codes
@@ -145,7 +144,6 @@ class TestAccountService(unittest.TestCase):
         data = responce.get_json()
         self.assertEqual(len(data), 5)
 
-
     def test_update_an_account(self):
         """It shoud update an account"""
         # create a test account
@@ -163,13 +161,12 @@ class TestAccountService(unittest.TestCase):
         data = responce.get_json()
         self.assertEqual(data["name"], "something")
 
-
     def test_deleting_account(self):
         """It deletes a account"""
         # create a test account
         test_account = self._create_accounts(1)[0]
 
-        #deleting the account
+        # deleting the account
         responce = self.client.delete(f"{BASE_URL}/{test_account.id}")
         self.assertEqual(responce.status_code, status.HTTP_204_NO_CONTENT)
 
@@ -177,7 +174,6 @@ class TestAccountService(unittest.TestCase):
         """tests for methods not allowed"""
         responce = self.client.delete(BASE_URL)
         self.assertAlmostEqual(responce.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-
 
     def test_security_headers(self):
         """It should return security headers"""
@@ -198,4 +194,3 @@ class TestAccountService(unittest.TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # check for the CORS header
         self.assertEqual(response.headers.get('Access-Control-Allow-Origin'), '*')
-
