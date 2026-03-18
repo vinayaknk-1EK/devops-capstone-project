@@ -10,7 +10,7 @@ import os
 
 # Get the database URL from the environment variable
 # Provide a localhost fallback ONLY for manual local development
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/postgres")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@postgresql:5432/postgres")
 
 logger = logging.getLogger("flask.app")
 
@@ -59,18 +59,6 @@ class PersistentBase:
         db.session.commit()
 
     @classmethod
-    def init_db(cls, app):
-        """Initializes the database session"""
-        logger.info("Initializing database")
-        cls.app = app
-        # This is where we initialize SQLAlchemy from the Flask app
-        # Use this variable to configure your SQLAlchemy engine or Flask app
-        app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
-        db.init_app(app)
-        app.app_context().push()
-        db.create_all()  # make our sqlalchemy tables
-
-    @classmethod
     def all(cls):
         """Returns all of the records in the database"""
         logger.info("Processing all records")
@@ -99,6 +87,18 @@ class Account(db.Model, PersistentBase):
     address = db.Column(db.String(256))
     phone_number = db.Column(db.String(32), nullable=True)  # phone number is optional
     date_joined = db.Column(db.Date(), nullable=False, default=date.today())
+
+    @classmethod
+    def init_db(cls, app):
+        """Initializes the database session"""
+        logger.info("Initializing database")
+        cls.app = app
+        # This is where we initialize SQLAlchemy from the Flask app
+        # Use this variable to configure your SQLAlchemy engine or Flask app
+        app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+        db.init_app(app)
+        app.app_context().push()
+        db.create_all()  # make our sqlalchemy tables
 
     def __repr__(self):
         return f"<Account {self.name} id=[{self.id}]>"
