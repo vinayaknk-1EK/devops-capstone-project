@@ -18,6 +18,9 @@ spec:
     - name: database-uri
       type: string
       default: "sqlite:///test.db"
+    - name: build-image
+      type: string
+
   tasks:
     - name: init
       workspaces:
@@ -81,3 +84,4 @@ spec:
       runAfter:
         - test
         - lint
+
