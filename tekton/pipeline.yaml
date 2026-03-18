@@ -61,7 +61,7 @@ spec:
       taskRef:
         name: nose
       params:
-      - name: database_uri
+      - name: database-uri
         value: $(params.database-uri)
       - name: args
         value: ["-v", "--with-spec", "--spec-color"]
