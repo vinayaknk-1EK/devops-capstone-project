@@ -496,6 +496,23 @@
 [build : build-and-push] Writing manifest to image destination
 [build : build-and-push] --> 9e156cb47a05
 [build : build-and-push] Successfully tagged image-registry.openshift-image-registry.svc:5000/sn-labs-vinayaknaikn/accounts:1
-[build : build-and-push] 9e156cb47a057303484bb23a43cf35cdb7e2e05128c8357428f5bf4e45128dce
-[build : build-and-push] neither 'config.json' nor '.dockerconfigjson' found at workspace root
+
+[deploy : oc] Updating manifest...
+[deploy : oc] apiVersion: apps/v1
+[deploy : oc] kind: Deployment
+[deploy : oc] metadata:
+[deploy : oc]   name: accounts
+[deploy : oc] spec:
+[deploy : oc]   template:
+[deploy : oc]     spec:
+[deploy : oc]       containers:
+[deploy : oc]       - name: accounts
+[deploy : oc]         image: image-registry.openshift-image-registry.svc:5000/sn-labs-vinayaknaikn/accounts:1
+[deploy : oc] ...
+[deploy : oc] Deploying to OpenShift...
+[deploy : oc] deployment.apps/accounts configured
+[deploy : oc] service/accounts configured
+[deploy : oc] route.route.openshift.io/accounts configured
+[deploy : oc] NAME                        READY   STATUS    RESTARTS   AGE
+[deploy : oc] accounts-6f9c9d7f5-abc12    1/1     Running   0          5s
 
