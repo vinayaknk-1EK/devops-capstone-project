@@ -69,7 +69,7 @@ spec:
       default: "splite:///test.db"
   steps:
     - name: nosetests
-      image: pyton:3.9-slim
+      image: python:3.9-slim
       workingDir: $(workspaces.source.path)
       env:
         - name: DATABASE_URI
