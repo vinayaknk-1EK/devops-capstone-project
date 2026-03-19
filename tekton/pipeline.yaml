@@ -64,10 +64,10 @@ spec:
       taskRef:
         name: nose
       params:
-      - name: database-uri
+      - name: database_uri
         value: $(params.database-uri)
       - name: args
-        value: "-v", "--with-spec", "--spec-color"
+        value: "-v --with-spec --spec-color"
       runAfter:
         - clone
 
@@ -81,7 +81,7 @@ spec:
         name: buildah
         kind: ClusterTask
       params:
-      - name: image
+      - name: IMAGE
         value: $(params.build-image)
       runAfter:
         - test
