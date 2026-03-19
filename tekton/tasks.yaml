@@ -66,13 +66,15 @@ spec:
     - name: database_uri
       description: database for the nosetest to run on
       type: string
-      default: "splite:///test.db"
+      default: "sqlite:///test.db"
   steps:
     - name: nosetests
       image: python:3.9-slim
       workingDir: $(workspaces.source.path)
       env:
         - name: DATABASE_URI
+          value: $(params.database_uri)
+        - name: DATABASE_URL        # <--- ADD THIS: Some code looks for URL
           value: $(params.database_uri)
       script: |
         #!/bin/bash
